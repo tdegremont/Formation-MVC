@@ -3,20 +3,25 @@ using StartFromScratch.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Injection de dépendance 
+// Système qui permet d'obtenir des instances de classe 
+// 1) Controle du nombre d'instances créées
+// 2) Faible couplage => Choisir une classe en uutilisant un fichier de config
 
 // Mettre à disposition mes controllers et les vues dans l'injection de dépendance
+// AddControllersWithViews est fournie par le package MVC
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<string>("toto");
+// builder.Services.AddSingleton<string>("toto");
 
 // Cet objet sera celui renvoyé par DI si demande pour List<Employe>
 
 
-var listeDesEmployes = new List<Employe>()
-        {
-            new Employe(){Nom="Mauras", Prenom="Dominique", Actif=true, DateEntree=DateTime.Now, Matricule="007", Salaire=1000000000},
-            new Employe(){Nom="Gates", Prenom="Bill", Actif=true, DateEntree=DateTime.Now, Matricule="009", Salaire=100000000},
-            new Employe(){Nom="Waine", Prenom="John", Actif=false, DateEntree=DateTime.Now, Matricule="005", Salaire=1000000}
-        };
+//var listeDesEmployes = new List<Employe>()
+//        {
+//            new Employe(){Nom="Mauras", Prenom="Dominique", Actif=true, DateEntree=DateTime.Now, Matricule="007", Salaire=1000000000},
+//            new Employe(){Nom="Gates", Prenom="Bill", Actif=true, DateEntree=DateTime.Now, Matricule="009", Salaire=100000000},
+//            new Employe(){Nom="Waine", Prenom="John", Actif=false, DateEntree=DateTime.Now, Matricule="005", Salaire=1000000}
+//        };
 
 // Mode singleton => Toute demande de List<Employe> sera résolmue en renvoyant l'objet listeDesEmployes
 //builder.Services.AddSingleton<List<Employe>>(listeDesEmployes);
@@ -38,7 +43,7 @@ var app = builder.Build();
 // Création d'une route
 // Association entre forme url et les méthodes de controller
 // /Employe/Addition => {controller} => Employe , {action} => Addition
-app.MapControllerRoute("default", "{controller}/{action}", new {Controller="Employe", Action="Index"});
+app.MapControllerRoute("default", "{controller}/{action}/{id}", new {Controller="Employe", Action="Index", Id=""});
 // Association entre url / et le controller / action souhaité
 app.MapControllerRoute("root", "/",new  { Controller="Employe", Action= "Addition" });
 //app.MapGet("/", () => "Hello World!");

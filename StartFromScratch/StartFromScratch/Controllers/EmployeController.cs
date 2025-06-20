@@ -8,7 +8,6 @@ namespace StartFromScratch.Controllers
     // Attribut Controller => Identifie une class comme étant un controller
     // Services.AddController le prendra en compte
     [Controller]
- 
     public class EmployeController : Controller
     {
         private readonly List<Employe> dataEmployes;
@@ -32,6 +31,11 @@ namespace StartFromScratch.Controllers
                 Liste = dataEmployes,
                 MasseSalariale = dataEmployes.Where(c => c.Actif).Sum(c => c.Salaire)
             };
+
+            ViewBag.UserName = "Dominique";
+            ViewData["UserName"] = "Dominique";
+
+           
             return View(model);
         }
 
@@ -46,12 +50,30 @@ namespace StartFromScratch.Controllers
             {
                 e.Salaire *= 1.1M;
             }
-            var model = new IndexVM()
+            return RedirectToAction("Index");
+
+
+            //var model = new IndexVM()
+            //{
+            //    Liste = dataEmployes,
+            //    MasseSalariale = dataEmployes.Where(c => c.Actif).Sum(c => c.Salaire)
+            //};
+            //return View("Index", model);
+        }
+
+
+        // GET : /Employe/Details/003
+        public IActionResult Details([FromRoute(Name ="id")] string matricule)
+        {
+            var employe = dataEmployes.FirstOrDefault(c => c.Matricule== matricule);
+            if (employe == null)
             {
-                Liste = dataEmployes,
-                MasseSalariale = dataEmployes.Where(c => c.Actif).Sum(c => c.Salaire)
-            };
-            return View("Index", model);
+                // Erreur 404 => Pourra être attrapée par une page élégante par défaut
+                // return NotFound();
+                return RedirectToAction("Index");
+            }
+            // /Views/Employe/Details
+            return View(employe);
         }
 
 

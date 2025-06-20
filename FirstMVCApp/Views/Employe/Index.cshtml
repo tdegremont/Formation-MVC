@@ -1,4 +1,5 @@
-﻿@model IndexVM
+﻿@using StartFromScratch.Models;
+@model IndexVM
 
 @{
     ViewBag.Title = "Liste des employés";
@@ -62,7 +63,10 @@
                 </tr>
             }
         </tbody>
+    
     </table>
+@Html.ActionLink("Augmenter les salaires", "AugmenterSalaires", new { Texte = "Dom" }) |
+@Html.ActionLink("Augmenter les salaires >5", "AugmenterSalaires", new EmployeSearchModel{ Anciennete = 5 }) |
 
 <!-- Cette partie de code HTML sera mise en place dans la page finale par le layout -->
 @section head{
