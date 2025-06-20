@@ -1,6 +1,7 @@
 ﻿using FirstMVCApp.Models;
+using FirstMVCApp.Services;
 
-namespace FirstMVCApp.Services
+namespace FirstMVCApp
 {
     public class EmployeServiceFromList : IEmployeService
     {
@@ -24,13 +25,6 @@ namespace FirstMVCApp.Services
                 e.Salaire *= taux;
             }
             return employes;
-        }
-
-        public async Task<Employe> CreateEmployeAsync(Employe employe)
-        {
-           
-            employes.Add(employe);
-            return employe;
         }
 
         public async Task<Employe> DeleteEmployeAsync(string matricule)
@@ -65,16 +59,24 @@ namespace FirstMVCApp.Services
 
         }
 
+        public string NewMatricule() {
+            return (employes
+                    .Select(c => int.Parse(c.Matricule))
+                    .Max() + 1).ToString().PadLeft(3,'0');
+        }
 
         public Task<IEnumerable<Employe>> GetEmployesAsync(EmployeSearchModel search)
         {
+            //throw new EmployeServiceException();
             logger.LogWarning("Recherche d'employés");
             IEnumerable<Employe> result = employes;
             if (search.Texte != null)
             {
+                // Where de IEnumerable => Prendre chaque élément de la Liste / Tableau
+                //Calculer le bool => Retenir que les élément pour lesquels la condition
                 result=result.Where(c=>c.Nom.Contains(search.Texte)
                 || c.Prenom.Contains(search.Texte)
-                || c.Matricule.Contains(search.Texte)
+                || c.Matricule==search.Texte
                 );
             }
             if(search.Anciennete != null)
@@ -83,6 +85,14 @@ namespace FirstMVCApp.Services
             }
             // Tant que le code appelant n'appelle pas MoveNext du Ienumerable => Aucun code écrit ici n'est exécuté
             return Task.FromResult(result);
+        }
+
+        public Task<Employe> AddEmployeAsync(Employe e)
+        {
+            e.Matricule = NewMatricule();
+            e.Nom = e.Nom.ToUpper();
+            employes.Add(e);
+            return Task.FromResult(e);
         }
     }
 

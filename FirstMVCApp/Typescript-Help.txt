@@ -1,0 +1,9 @@
+1) Installer node js
+2) Dans le dossier 
+	npm init => package.json
+	npm i typescript => Installation de typescript
+	npx tsc --init => Créé un fichier tsconfig.json
+	edit tsconfig.json => change le outdir
+	npx tsc --watch => Lance un script de compilation automatique des fichiers ts
+	npm i @types/jquery => Permet à typescript de savoir quelles sont les interfaces proposées dans jquery
+ 	

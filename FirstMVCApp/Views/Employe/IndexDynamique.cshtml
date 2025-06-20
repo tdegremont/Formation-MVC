@@ -1,0 +1,42 @@
+﻿@model IndexVM
+
+@{
+    ViewBag.Title = "Liste des employés";
+}
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<hr />
+<h5>Recherche</h5>
+<form asp-action="Index" id="formulaireRecherche">
+    @*  @Html.Partial("_Search",new EmployeSearchModel(){Anciennete=5}) *@
+        <partial name="_Search" model="Model.SearchModel"></partial>
+</form>
+<hr />
+<div id="listeEmployes">
+    Attendez....
+</div>
+
+
+
+
+
+@Html.ActionLink("Augmenter anciennete > 5", "AugmenterSalaires", new { taux = 1.05M, Anciennete = 5 },
+                new { toto = "H", @class = "btn btn-danger" }
+            )
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        // Aller chercher /Employe?partial=true => Mettre le contenu dans listeEmployes
+        <script src="/js/IndexDynamique.cshtml.script.js"></script>
+
+    }
+}
+

@@ -1,4 +1,6 @@
-﻿using FirstMVCApp.CustomsAttributes;
+﻿using FirstMVCApp.CustomAttributes.ValidationAttributes;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,7 +21,8 @@ namespace FirstMVCApp.Models
 
 
         [DisplayName("Matricule")]
-
+        [ValidateNever]
+        [BindNever]
         public string Matricule { get; set; }
 
         [DisplayName("Salaire")]
@@ -27,13 +30,14 @@ namespace FirstMVCApp.Models
         public decimal Salaire { get; set; }
 
         [DisplayName("Date d'entrée")]
-        [JourdeSemaine(true, "{0} doit être un jour ouvré samedi {1}")]
+        // true = Le samedi est accepté
+        [JourDeSemaine(false,errorSamediPasAutorise:"Pas le dimanche pour {0}")]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         
-        public DateTime DateEntree { get; set; }=DateTime.Now;
+        public DateTime DateEntree { get; set; }
 
         [DisplayName("En activité")]
-        public bool Actif { get; set; } = true;
+        public bool Actif { get; set; }
 
     }
 }

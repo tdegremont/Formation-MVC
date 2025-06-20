@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using FirstMVCApp.CustomAttributes.ValidationAttributes;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace FirstMVCApp.Models
@@ -12,7 +13,10 @@ namespace FirstMVCApp.Models
         // Recherche dans matricule, nom, prenom
         public string? Texte { get; set; }
 
-
+        // Attribut personnalisé de validation
+        // Le constructeur demande le diviseur
+        // et je spécifie la valeur de errorMessage
+        [EstDivisiblePar(2,errorMessage:"{0} doit être un multiple de {1}")]
         [DisplayName("Ancienneté")]
         [Range(1, 70, ErrorMessage = "{0} doit être entre {1} et {2}")]
         // Par anciennete minimale en années
