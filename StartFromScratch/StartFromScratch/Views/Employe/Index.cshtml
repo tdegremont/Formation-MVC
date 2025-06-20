@@ -1,0 +1,16 @@
+﻿@using StartFromScratch.ViewModels.Employe;
+@model IndexVM;
+
+
+    <ul>
+@{
+    foreach(var e in Model.Liste)
+    {
+      
+       <li>@e.Nom e.Prenom (@e.Salaire €)</li>
+    }
+    }
+</ul>
+<div>
+    Masse salariale : @Model.MasseSalariale €
+</div>
