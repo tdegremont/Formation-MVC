@@ -1,6 +1,5 @@
 ﻿
 using FirstMVCApp.Models;
-using StartFromScratch.Models;
 
 namespace FirstMVCApp.Services
 {
@@ -9,7 +8,10 @@ namespace FirstMVCApp.Services
         Task<IEnumerable<Employe>> GetEmployesAsync(EmployeSearchModel search);
         Task<Employe> GetEmployeAsync(string matricule);
 
-        Task<IEnumerable<Employe>> AugmenterEmployesAsync(EmployeSearchModel search);
+        Task<Employe> DeleteEmployeAsync(string matricule);
 
+        Task<Employe> CreateEmployeAsync(Employe employe); 
+
+        Task<IEnumerable<Employe>> AugmenterEmployesAsync(EmployeSearchModel search, decimal taux);
     }
 }

@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using FirstMVCApp.CustomsAttributes;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace StartFromScratch.Models
+namespace FirstMVCApp.Models
 {
     public class Employe
     {
@@ -26,12 +27,13 @@ namespace StartFromScratch.Models
         public decimal Salaire { get; set; }
 
         [DisplayName("Date d'entrée")]
+        [JourdeSemaine(true, "{0} doit être un jour ouvré samedi {1}")]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         
-        public DateTime DateEntree { get; set; }
+        public DateTime DateEntree { get; set; }=DateTime.Now;
 
         [DisplayName("En activité")]
-        public bool Actif { get; set; }
+        public bool Actif { get; set; } = true;
 
     }
 }

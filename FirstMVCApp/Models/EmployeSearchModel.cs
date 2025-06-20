@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace FirstMVCApp.Models 
+namespace FirstMVCApp.Models
 {
     // ce modèle sert à rechercher un employe
     // => générer un formulaire de recherche
@@ -14,9 +14,9 @@ namespace FirstMVCApp.Models
 
 
         [DisplayName("Ancienneté")]
-        [Range(1,70, ErrorMessage ="{0} doit être entre {1} et {2}")]
+        [Range(1, 70, ErrorMessage = "{0} doit être entre {1} et {2}")]
         // Par anciennete minimale en années
-        public int? Anciennete { get; set; }
+        public int? Anciennete { get; set; } 
 
         // Cette méthode sera appelée par MVC
         // Pour valider les données une fois
@@ -26,7 +26,8 @@ namespace FirstMVCApp.Models
             // Clacul du premier élément
             if(this.Texte==null && this.Anciennete == null)
             {
-                yield return new ValidationResult($"{nameof(Anciennete)} ou {nameof(Texte)} doit être fournie");
+                yield return new ValidationResult($"{nameof(Anciennete)} ou {nameof(Texte)} doit être fournie", 
+                        new List<string>() { nameof(Anciennete),nameof(Texte) });
             }
             // Le code continue ici si le code appelant cette méthode 
             // décide de lire le deuxieme élément de l'énumarbale

@@ -1,0 +1,21 @@
+﻿@model FirstMVCApp.Models.EmployeSearchModel
+
+
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="Texte" class="control-label"></label>
+    <input asp-for="Texte" class="form-control" />
+    <span asp-validation-for="Texte" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Anciennete" class="control-label"></label>
+    <input asp-for="Anciennete" class="form-control" />
+    <span asp-validation-for="Anciennete" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <input type="submit" value="Save" class="btn btn-primary" />
+</div>
+
+
+

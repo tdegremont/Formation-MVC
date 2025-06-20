@@ -1,40 +1,50 @@
-﻿@using StartFromScratch.Models;
-@model IndexVM
+﻿@model IndexVM
 
 @{
     ViewBag.Title = "Liste des employés";
 }
 
 
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Liste.First().Nom)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Liste.First().Prenom)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Liste.First().Matricule)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Liste.First().Salaire)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Liste.First().DateEntree)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Liste.First().Actif)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Liste)
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<hr />
+<h5>Recherche</h5>
+<form asp-action="Index">
+    @*  @Html.Partial("_Search",new EmployeSearchModel(){Anciennete=5}) *@
+    <partial name="_Search" model="Model.SearchModel"></partial>
+</form>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Liste.First().Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Liste.First().Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Liste.First().Matricule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Liste.First().Salaire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Liste.First().DateEntree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Liste.First().Actif)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Liste != null)
+        {
+            foreach (var item in Model.Liste)
             {
                 <tr>
                     <td>
@@ -57,19 +67,28 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Matricule }) |
-                        @Html.ActionLink("Details", "Details", new {  id=item.Matricule  }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Matricule }, new { @class = "btn btn-primary" }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.Matricule })
+
+                        <a asp-action="Detail" asp-controller="Employe" asp-route-id="@item.Matricule" class="btn btn-primary" toto="toto">Details</a>
+
                     </td>
                 </tr>
             }
-        </tbody>
-    
-    </table>
-@Html.ActionLink("Augmenter les salaires", "AugmenterSalaires", new { Texte = "Dom" }) |
-@Html.ActionLink("Augmenter les salaires >5", "AugmenterSalaires", new EmployeSearchModel{ Anciennete = 5 }) |
+        }
+        else
+        {
+            <div class="alert alert-danger">Erreur de critères de recherche </div>
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Augmenter anciennete > 5", "AugmenterSalaires", new { taux = 1.05M, Anciennete = 5 },
+        new { toto = "H", @class = "btn btn-danger" }
+    )
+
 
 <!-- Cette partie de code HTML sera mise en place dans la page finale par le layout -->
-@section head{
+@section head {
     <style>
         .toto {
         }
@@ -79,4 +98,9 @@
     </script>
 }
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 

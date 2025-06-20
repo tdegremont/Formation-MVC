@@ -1,4 +1,4 @@
-﻿@model StartFromScratch.Models.Employe
+﻿@model FirstMVCApp.Models.Employe
 
 @{
     ViewData["Title"] = "Create";
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Matricule" class="control-label"></label>
-                <input asp-for="Matricule" class="form-control" />
+                <input asp-for="Matricule" class="form-control" disabled />
                 <span asp-validation-for="Matricule" class="text-danger"></span>
             </div>
             <div class="form-group">

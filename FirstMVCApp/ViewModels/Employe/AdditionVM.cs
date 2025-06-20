@@ -1,4 +1,4 @@
-﻿namespace StartFromScratch.ViewModels.Employe
+﻿namespace FirstMVCApp.ViewModels.Employe
 {
     public class AdditionVM
     {

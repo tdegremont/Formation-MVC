@@ -1,5 +1,4 @@
 ﻿using FirstMVCApp.Models;
-using StartFromScratch.Models;
 
 namespace FirstMVCApp.Services
 {
@@ -14,16 +13,33 @@ namespace FirstMVCApp.Services
             this.logger = logger;
             logger.LogWarning("Création d'un EmployeServiceFromList");
         }
-        public async Task<IEnumerable<Employe>> AugmenterEmployesAsync(EmployeSearchModel search)
+
+        public async Task<IEnumerable<Employe>> AugmenterEmployesAsync(EmployeSearchModel search,decimal taux)
         {
-            logger.LogWarning("Augmentation des employés");
-            IEnumerable<Employe> result = await this.GetEmployesAsync(search);
-            // Augmenter le salaire de 10%
-            foreach (var emp in result)
-            {
-                emp.Salaire *= 1.1m;
+            // Pour économiser le processeur (filtrage par foreach ici en dans la vue) => ToList()
+            // Pour économiser la mémoire => Laisse en IEnumerable
+            var employes = (await GetEmployesAsync(search)).ToList();
+            // Itération de modification
+            foreach (var e in employes) {
+                e.Salaire *= taux;
             }
-            return result;
+            return employes;
+        }
+
+        public async Task<Employe> CreateEmployeAsync(Employe employe)
+        {
+           
+            employes.Add(employe);
+            return employe;
+        }
+
+        public async Task<Employe> DeleteEmployeAsync(string matricule)
+        {
+            var employe = await GetEmployeAsync(matricule);
+   
+            employes.Remove(employe);
+            return employe;
+
         }
 
         public Task<Employe> GetEmployeAsync(string matricule)
